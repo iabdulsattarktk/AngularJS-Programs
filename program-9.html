@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html ng-app="employeeApp">
+<head>
+    <title>Employee Search System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            width: 500px;
+        }
+        h2 { text-align: center; color: #333; margin-bottom: 25px; }
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+        .search-box:focus { border-color: #007bff; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+        tr:hover { background-color: #f1f7ff; }
+        .no-result {
+            text-align: center;
+            color: #ff4757;
+            padding: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body ng-controller="employeeController">
+
+<div class="container">
+    <h2>Employee Records</h2>
+    
+    <input type="text" class="search-box" ng-model="searchText" placeholder="Search by name or salary...">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Employee Name</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="emp in employees | filter: searchText">
+                <td>{{ emp.name }}</td>
+                <td>{{ emp.salary | number }}</td>
+            </tr>
+            <tr ng-if="(employees | filter: searchText).length === 0">
+                <td colspan="2" class="no-result">No employee found!</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var app = angular.module('employeeApp', []);
+    app.controller('employeeController', function($scope) {
+        $scope.employees = [
+            { name: 'Ali Ahmed', salary: 55000 },
+            { name: 'Sara Khan', salary: 75000 },
+            { name: 'Usman Sheikh', salary: 42000 },
+            { name: 'Zainab Bibi', salary: 90000 },
+            { name: 'Hamza Malik', salary: 62000 }
+        ];
+    });
+</script>
+
+</body>
+</html>

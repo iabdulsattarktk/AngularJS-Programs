@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html ng-app="loginApp">
+<head>
+    <title>AngularJS Login Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        h2 { text-align: center; color: #1c1e21; margin-bottom: 25px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #606770; }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input.ng-invalid.ng-touched { border-color: #fa3e3e; }
+        .error-msg {
+            color: #fa3e3e;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .login-btn:disabled {
+            background-color: #afb1b4;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body ng-controller="loginController">
+
+<div class="login-card">
+    <h2>Login</h2>
+    <form name="loginForm" ng-submit="submitForm()" novalidate>
+        
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" ng-model="user.username" required ng-minlength="4" placeholder="Enter username">
+            <div class="error-msg" ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+                <span ng-show="loginForm.username.$error.required">Username is required.</span>
+                <span ng-show="loginForm.username.$error.minlength">Too short (Min 4 chars).</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" ng-model="user.password" required ng-minlength="6" placeholder="Enter password">
+            <div class="error-msg" ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+                <span ng-show="loginForm.password.$error.required">Password is required.</span>
+                <span ng-show="loginForm.password.$error.minlength">Must be at least 6 characters.</span>
+            </div>
+        </div>
+
+        <button type="submit" class="login-btn" ng-disabled="loginForm.$invalid">
+            Login Now
+        </button>
+    </form>
+</div>
+
+<script>
+    var app = angular.module('loginApp', []);
+    app.controller('loginController', function($scope) {
+        $scope.user = {};
+        
+        $scope.submitForm = function() {
+            alert("Login Successful for: " + $scope.user.username);
+        };
+    });
+</script>
+
+</body>
+</html>

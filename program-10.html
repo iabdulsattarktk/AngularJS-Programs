@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app="itemApp">
+<head>
+    <title>Item Collection System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f3f6;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+        .inventory-box {
+            background: #ffffff;
+            width: 450px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+        h2 { text-align: center; color: #444; margin-bottom: 20px; }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+            font-size: 15px;
+        }
+        input:focus { border-color: #6c5ce7; }
+        .add-btn {
+            background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .count-badge {
+            background-color: #6c5ce7;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            float: right;
+        }
+        ul { list-style: none; padding: 0; margin-top: 10px; clear: both; }
+        li {
+            background: #f9f9f9;
+            margin-bottom: 8px;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #6c5ce7;
+            color: #2d3436;
+            display: flex;
+            justify-content: space-between;
+        }
+        .empty-msg { text-align: center; color: #999; font-style: italic; }
+    </style>
+</head>
+<body ng-controller="itemController">
+
+<div class="inventory-box">
+    <h2>Item Collection</h2>
+    
+    <div class="input-group">
+        <input type="text" ng-model="newItem" placeholder="Enter item name (e.g. Laptop)">
+        <button class="add-btn" ng-click="addItem()">Add Item</button>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <strong>Total Collection:</strong> 
+        <span class="count-badge">{{ items.length }}</span>
+    </div>
+
+    <ul>
+        <li ng-repeat="item in items">
+            <span>{{ item }}</span>
+            <small style="color: #aaa;">#{{ $index + 1 }}</small>
+        </li>
+    </ul>
+    
+    <p class="empty-msg" ng-if="items.length === 0">No items in the collection yet.</p>
+</div>
+
+<script>
+    var app = angular.module('itemApp', []);
+    app.controller('itemController', function($scope) {
+        // Initial Items
+        $scope.items = ['Mobile', 'Tablet', 'Smart Watch'];
+
+        // Add Item Function
+        $scope.addItem = function() {
+            if ($scope.newItem) {
+                $scope.items.push($scope.newItem);
+                $scope.newItem = ''; // Input clear karna
+            } else {
+                alert("Please enter an item name!");
+            }
+        };
+    });
+</script>
+
+</body>
+</html>

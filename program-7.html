@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html ng-app="crudApp">
+<head>
+    <title>AngularJS CRUD System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; padding: 30px; }
+        .container { max-width: 700px; margin: auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        .form-group { margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; }
+        input { padding: 10px; border: 1px solid #ddd; border-radius: 5px; width: 35%; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        .btn { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; color: white; margin-right: 5px; }
+        .add-btn { background-color: #28a745; width: 100px; }
+        .edit-btn { background-color: #ffc107; color: black; }
+        .delete-btn { background-color: #dc3545; }
+        .update-btn { background-color: #17a2b8; }
+    </style>
+</head>
+<body ng-controller="crudController">
+
+<div class="container">
+    <h2>User Management System</h2>
+
+    <div class="form-group">
+        <input type="text" ng-model="userForm.name" placeholder="Enter Name">
+        <input type="email" ng-model="userForm.email" placeholder="Enter Email">
+        
+        <button class="btn add-btn" ng-show="!isEditing" ng-click="addUser()">Add User</button>
+        <button class="btn update-btn" ng-show="isEditing" ng-click="updateUser()">Update</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="u in users">
+                <td>{{u.name}}</td>
+                <td>{{u.email}}</td>
+                <td>
+                    <button class="btn edit-btn" ng-click="editUser(u)">Edit</button>
+                    <button class="btn delete-btn" ng-click="deleteUser($index)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var app = angular.module('crudApp', []);
+    app.controller('crudController', function($scope) {
+        $scope.users = [
+            { name: 'Ali', email: 'ali@example.com' },
+            { name: 'Sara', email: 'sara@example.com' }
+        ];
+
+        $scope.userForm = {};
+        $scope.isEditing = false;
+        var editIndex = -1;
+
+        $scope.addUser = function() {
+            if($scope.userForm.name && $scope.userForm.email) {
+                $scope.users.push(angular.copy($scope.userForm));
+                $scope.userForm = {};
+            }
+        };
+
+        $scope.editUser = function(user) {
+            $scope.isEditing = true;
+            editIndex = $scope.users.indexOf(user);
+            $scope.userForm = angular.copy(user);
+        };
+
+        $scope.updateUser = function() {
+            if(editIndex > -1) {
+                $scope.users[editIndex] = angular.copy($scope.userForm);
+                $scope.isEditing = false;
+                $scope.userForm = {};
+                editIndex = -1;
+            }
+        };
+
+        // Delete User
+        $scope.deleteUser = function(index) {
+            $scope.users.splice(index, 1);
+        };
+    });
+</script>
+
+</body>
+</html>

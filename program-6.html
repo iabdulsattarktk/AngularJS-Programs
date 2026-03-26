@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html ng-app="todoApp">
+<head>
+    <title>Professional To-Do List</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+        }
+        .todo-box {
+            background: #ffffff;
+            width: 400px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        h2 { text-align: center; color: #2d3436; margin-bottom: 25px; }
+        .input-section { display: flex; gap: 10px; margin-bottom: 20px; }
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #dfe6e9;
+            border-radius: 8px;
+            outline: none;
+        }
+        input:focus { border-color: #0984e3; }
+        .add-btn {
+            background-color: #00b894;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        ul { list-style: none; padding: 0; }
+        li {
+            background: #fdfdfd;
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid #0984e3;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .actions button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .edit-btn { background-color: #f1c40f; color: white; }
+        .del-btn { background-color: #ff7675; color: white; }
+        .save-btn { background-color: #0984e3; color: white; }
+    </style>
+</head>
+<body ng-controller="todoController">
+
+<div class="todo-box">
+    <h2>My Tasks</h2>
+    
+    <div class="input-section">
+        <input type="text" ng-model="newTask" placeholder="What needs to be done?">
+        <button class="add-btn" ng-click="addTask()">Add</button>
+    </div>
+
+    <ul>
+        <li ng-repeat="task in tasks">
+            <div ng-if="!task.editing">
+                {{ task.title }}
+            </div>
+            <div ng-if="task.editing">
+                <input type="text" ng-model="task.title" style="width: 150px; padding: 5px;">
+            </div>
+
+            <div class="actions">
+                <button class="edit-btn" ng-if="!task.editing" ng-click="editTask(task)">Edit</button>
+                <button class="save-btn" ng-if="task.editing" ng-click="saveTask(task)">Save</button>
+                <button class="del-btn" ng-click="deleteTask($index)">Delete</button>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<script>
+    var app = angular.module('todoApp', []);
+    app.controller('todoController', function($scope) {
+        // Default tasks
+        $scope.tasks = [
+            { title: 'Learn AngularJS', editing: false },
+            { title: 'Complete Lab Manual', editing: false }
+        ];
+
+        // Add Task
+        $scope.addTask = function() {
+            if ($scope.newTask) {
+                $scope.tasks.push({ title: $scope.newTask, editing: false });
+                $scope.newTask = '';
+            }
+        };
+
+        // Delete Task
+        $scope.deleteTask = function(index) {
+            $scope.tasks.splice(index, 1);
+        };
+
+        // Edit Task
+        $scope.editTask = function(task) {
+            task.editing = true;
+        };
+
+        // Save Task
+        $scope.saveTask = function(task) {
+            task.editing = false;
+        };
+    });
+</script>
+
+</body>
+</html>

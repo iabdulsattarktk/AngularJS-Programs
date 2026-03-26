@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html ng-app="studentApp">
+<head>
+    <title>Student CGPA Management</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 500px;
+        }
+        h2 { color: #1a73e8; text-align: center; margin-bottom: 25px; }
+        .input-group { margin-bottom: 20px; text-align: center; }
+        input {
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 40%;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #1557b0; }
+        .stats {
+            background: #e8f0fe;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #1967d2;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th { background-color: #f8f9fa; color: #555; }
+        tr:hover { background-color: #f1f1f1; }
+    </style>
+</head>
+<body ng-controller="studentController">
+
+    <div class="container">
+        <h2>Student Records</h2>
+
+        <div class="input-group">
+            <input type="text" ng-model="newName" placeholder="Student Name">
+            <input type="number" ng-model="newCgpa" placeholder="CGPA" step="0.1">
+            <br><br>
+            <button ng-click="addStudent()">Add Student</button>
+        </div>
+
+        <div class="stats">
+            Total Students Enrolled: {{ students.length }}
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>CGPA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="s in students">
+                    <td>{{ s.name }}</td>
+                    <td>{{ s.cgpa }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var app = angular.module('studentApp', []);
+        app.controller('studentController', function($scope) {
+            $scope.students = [
+                { name: 'Arun', cgpa: 9.5 },
+                { name: 'Bhavana', cgpa: 9.6 },
+                { name: 'Chandan', cgpa: 7.8 }
+            ];
+
+            $scope.addStudent = function() {
+                if ($scope.newName && $scope.newCgpa) {
+                    $scope.students.push({
+                        name: $scope.newName,
+                        cgpa: $scope.newCgpa
+                    });
+                    $scope.newName = '';
+                    $scope.newCgpa = '';
+                } else {
+                    alert("Please enter both Name and CGPA");
+                }
+            };
+        });
+    </script>
+</body>
+</html>

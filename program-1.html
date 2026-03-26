@@ -1,93 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>Angular Full Name</title>
-    
-    <!-- Step 1: Angular JS ki Library load karo Google se -->
-    <!-- (Jaise tum Bootstrap ka CDN use karte ho) -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-    
-    <style>
-        body {
-            font-family: Arial;
-            padding: 20px;
-        }
-        input {
-            padding: 8px;
-            margin: 10px 0;
-            width: 300px;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: blue;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        h1 {
-            color: rgb(9, 255, 214);
-        }
-    </style>
-</head>
-<body>
 
-    <!-- Step 2: ng-app="myApp" - Ye bataao ke Angular yahan se start kare -->
-    <!-- ng-controller="myCtrl" - Controller connect karo -->
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+      }
+      input {
+        padding: 8px;
+        margin: 10px 0;
+        width: 300px;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: blue;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      h1 {
+        color: rgb(9, 255, 214);
+      }
+    </style>
+  </head>
+  <body>
     <div ng-app="myApp" ng-controller="myCtrl">
-        
-        <h1>Full Name App</h1>
-        
-        <!-- Step 3: ng-model se INPUT ko VARIABLE se connect karo -->
-        <!-- Jab user likhe, to firstName variable update hoga -->
+      <h1>Full Name App</h1>
+
+      <div>
         <label>First Name:</label>
-        <input type="text" ng-model="firstName">
-        <br>
-        
+        <input type="text" ng-model="firstName" />
+        <br />
+      </div>
+      <div>
         <label>Last Name:</label>
-        <input type="text" ng-model="lastName">
-        <br><br>
-        
-        <!-- Step 4: ng-click - Button click par function call karo -->
-        <button ng-click="combineNames()">Show Full Name</button>
-        
-        <br><br>
-        
-        <!-- Step 5: {{ }} - Variable ko display karo -->
-        <!-- Ye HTML ke beech JavaScript variable likh sakte ho! -->
-        <h1>Full Name: {{ fullName }}</h1>
-        
+        <input type="text" ng-model="lastName" />
+        <br /><br />
+      </div>
+
+      <button ng-click="combineNames()">Show Full Name</button>
+
+      <br /><br />
+
+      <h1>Full Name: {{ fullName }}</h1>
     </div>
 
-    <!-- Step 6: JavaScript Code -->
     <script>
-        // Step A: angular.module() - App banao
-        // 'myApp' = app ka name
-        // [] = dependencies (filhaal empty)
-        angular.module('myApp', [])
-            
-            // Step B: .controller() - Logic likho
-            // 'myCtrl' = controller ka name
-            // function($scope) = $scope se HTML se connect karo
-            .controller('myCtrl', function($scope) {
-                
-                // Step C: Default values (jab page load ho)
-                $scope.firstName = 'Satar';
-                $scope.lastName = 'Khan';
-                $scope.fullName = '';
-                
-                // Step D: Function banao
-                // Jab button click hoga, ye function run hoga
-                $scope.combineNames = function() {
-                    // firstName + lastName = fullName
-                    $scope.fullName = $scope.firstName + ' ' + $scope.lastName;
-                };
-                
-                // Step E: Page load hote hi function run karo
-                $scope.combineNames();
-            });
-    </script>
+      angular
+        .module("myApp", [])
 
-</body>
+        .controller("myCtrl", function ($scope) {
+          $scope.firstName = "Satar";
+          $scope.lastName = "Khan";
+          $scope.fullName = "";
+
+          $scope.combineNames = function () {
+            $scope.fullName = $scope.firstName + " " + $scope.lastName;
+          };
+
+          $scope.combineNames();
+        });
+    </script>
+  </body>
 </html>

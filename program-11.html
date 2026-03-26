@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html ng-app="filterApp">
+<head>
+    <title>AngularJS Uppercase Filter</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+        }
+        .filter-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 500px;
+        }
+        h2 { text-align: center; color: #2c3e50; }
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .cap-text {
+            color: #e67e22;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body ng-controller="filterController">
+
+<div class="filter-container">
+    <h2>Student Uppercase Filter</h2>
+    
+    <input type="text" class="search-bar" ng-model="searchName" placeholder="Search student name...">
+
+    <table>
+        <thead>
+            <tr>
+                <th>Original Name</th>
+                <th>Uppercase Filter</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="student in students | filter:searchName">
+                <td>{{ student.name }}</td>
+                <td class="cap-text">{{ student.name | uppercase }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    var app = angular.module('filterApp', []);
+    app.controller('filterController', function($scope) {
+        $scope.students = [
+            { name: 'ali hamza' },
+            { name: 'sara ali' },
+            { name: 'osman khan' },
+            { name: 'zainab fatima' },
+            { name: 'bilal ahmed' }
+        ];
+    });
+</script>
+
+</body>
+</html>
